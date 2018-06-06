@@ -1,5 +1,5 @@
 # sorts players based on day 2 - day 1 position difference on every state tournament for the past 8 years (32 tournaments)
-# only considers those who finished in top 15 (I don't care about the people who went from 90th to 49th...)
+# only considers those who finished in top 15
 
 import requests
 from bs4 import BeautifulSoup
