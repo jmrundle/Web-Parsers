@@ -43,6 +43,7 @@ class Handicap:
             print("No Courses found with name: {}.  Please try again with a different name.\n".format(self.course_name))
             self.course_search()
         else:
+            print()
             for i, course_info in enumerate(courses):
                 course, link, city, state = course_info.find_all('td')
                 self.course_links.append(link.a['href'])
