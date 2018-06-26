@@ -1,3 +1,2 @@
 # Web-Parsers
-DistrictScores.py and StateScores.py requires `requests` and `bs4` modules  
-Handicap.py requires `bs4` and `selenium` modules  
+Use a combination of requests, bs4, and selenium modules to parse web data and display information
