@@ -1,5 +1,4 @@
-# sorts players based on day 2 - day 1 position difference on every state tournament for the past 8 years (32 tournaments)
-# only considers those who finished in top 15
+# sorts players based on day 2 - day 1 position ratio on every state tournament for the past 8 years (32 tournaments)
 
 import requests
 from bs4 import BeautifulSoup
@@ -18,7 +17,7 @@ class Player:
         self.day_two_pos = int(current_pos)
 
         # variables that will determine how to sort and display leaderboard
-        self.difference = None
+        self.ratio = None
         self.rank = None
 
 # will contain list of player objects
@@ -52,23 +51,27 @@ for year in range(2010, 2018):
             else:
                 person.day_one_pos = index + 1
 
-            person.difference = person.day_two_pos - person.day_one_pos
+            person.ratio = person.day_two_pos / person.day_one_pos
 
         leaderboard.append(section)
 
 
 # convert 2D leaderboard to 1D list
 # only worry about players who finished in top 15
-leaderboard = [player for section in leaderboard for player in section if player.day_two_pos <= 15]
+leaderboard = [player for section in leaderboard for player in section]
 
 # rank based on difference
-leaderboard.sort(key= lambda p: p.difference)
+leaderboard.sort(key= lambda p: p.ratio)
 for index, person in enumerate(leaderboard):
     # give golfers a rank (for viewing purposes), those with same difference have same rank
-    if index > 0 and person.difference == leaderboard[index - 1].difference:
+    if index > 0 and person.ratio == leaderboard[index - 1].ratio:
         person.rank = leaderboard[index-1].rank
     else:
         person.rank = index + 1
 
-    print("{}. {}: {} ({} to {}) ---- Score: {}-{} ---- Class {} in {}".format(person.rank, person.name, person.difference, person.day_one_pos, person.day_two_pos, person.day_one, person.day_two, person.class_, person.year))
+    print("{}. {}: {} ({} to {}) ---- Score: {}-{} ---- Class {} in {}".format(person.rank, person.name, 
+                                                                               round(person.ratio, 3), 
+                                                                               person.day_one_pos, person.day_two_pos, 
+                                                                               person.day_one, person.day_two, 
+                                                                               person.class_, person.year))
     
