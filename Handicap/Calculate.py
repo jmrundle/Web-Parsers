@@ -26,7 +26,7 @@ class Handicap:
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
         self.browser = webdriver.Chrome(
-                        executable_path=r"C:\Users\Jack\Downloads\chromedriver_win32\chromedriver.exe",
+                        executable_path=r"INSERT PATH HERE",
                         chrome_options=options)
         self.browser.get(self.base_url)
 
