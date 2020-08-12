@@ -24,7 +24,7 @@ for c in range(1,5):  # each class (1-4)
 
         for row in table:
             try:
-                name, school, score = [val.text.strip() for val in row.find_all('td')[1:]]  # unpack info (skip position)
+                _, name, school, _, score = [val.text.strip() for val in row.find_all('td')[1:]]  # unpack info (skip position)
                 if int(score) < 999:  # ignore players who MSHSAA DQ'ed or WD'ed
                     leaderboard.append(Player(name, school, c, d, score))
             except ValueError:
