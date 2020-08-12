@@ -23,11 +23,13 @@ for c in range(1,5):  # each class (1-4)
         table = html.find(id='ctl00_contentMain_dgIndividuals').find_all('tr')[1:]  # individual results (skip header)
 
         for row in table:
+            _, name, school, score, _ = [val.text.strip() for val in row.find_all('td')]  # unpack info
+
             try:
-                _, name, school, _, score = [val.text.strip() for val in row.find_all('td')[1:]]  # unpack info (skip position)
                 if int(score) < 999:  # ignore players who MSHSAA DQ'ed or WD'ed
                     leaderboard.append(Player(name, school, c, d, score))
             except ValueError:
+                print(score)
                 pass
 
 leaderboard.sort(key = lambda p: p.score)
@@ -39,4 +41,11 @@ for index, player in enumerate(leaderboard):
     else:
         player.rank = index + 1
 
-    print("{}. {}: {}  ({} - Class {} - District {})".format(player.rank, player.name, player.score, player.school, player.class_, player.district))
+    if player.score == 0:
+        score_string = "E"
+    elif player.score > 0:
+        score_string = "+" + str(player.score)
+    else:
+        score_string = str(player.score)
+
+    print("{}. {}: {}  ({} - Class {} - District {})".format(player.rank, player.name, score_string, player.school, player.class_, player.district))
